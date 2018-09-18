@@ -1,0 +1,198 @@
+Total: 185.53MB
+ROUTINE ======================== main.InitCache in /home/isucon/torb/webapp/go/src/torb/app.go
+         0    37.82MB (flat, cum) 20.39% of Total
+         .          .     56:	cEventSheet = map[int64]map[int64]*Sheet{}
+         .          .     57:	cReservedTimes = map[int64]map[int64]int64{}
+         .          .     58:	cReservedUserID = map[int64]map[int64]int64{}
+         .          .     59:	cReservation = map[int64]*Reservation{}
+         .          .     60:
+         .   512.03kB     61:	InitUser()
+         .          .     62:	InitSheet()
+         .    36.28MB     63:	InitReservation()
+         .          .     64:	InitEvent()
+         .     1.04MB     65:	InitReservedTime()
+         .          .     66:}
+         .          .     67:
+         .          .     68:// User
+         .          .     69:func GetUserByName(userName string) *User {
+         .          .     70:	cMtx.Lock()
+ROUTINE ======================== main.InitReservation in /home/isucon/torb/webapp/go/src/torb/app.go
+   23.28MB    36.28MB (flat, cum) 19.56% of Total
+         .          .    216:
+         .          .    217:	rows, err := db.Queryx("SELECT * FROM reservations")
+         .          .    218:	must(err)
+         .          .    219:	defer rows.Close()
+         .          .    220:	for rows.Next() {
+   18.50MB    18.50MB    221:		var r Reservation
+         .       13MB    222:		err = rows.StructScan(&r)
+         .          .    223:		must(err)
+         .          .    224:
+    4.78MB     4.78MB    225:		cReservation[r.ID] = &r
+         .          .    226:	}
+         .          .    227:
+         .          .    228:	log.Println("InitReservation", time.Since(t).Seconds())
+         .          .    229:}
+         .          .    230:
+ROUTINE ======================== main.InitReservedTime in /home/isucon/torb/webapp/go/src/torb/app.go
+    1.04MB     1.04MB (flat, cum)  0.56% of Total
+         .          .    245:		rows.Scan(&eventId, &sheetId, &userId, &reservedAt)
+         .          .    246:		if _, ok := cReservedTimes[eventId]; !ok {
+         .          .    247:			cReservedTimes[eventId] = make(map[int64]int64)
+         .          .    248:			cReservedUserID[eventId] = make(map[int64]int64)
+         .          .    249:		}
+    1.04MB     1.04MB    250:		cReservedTimes[eventId][sheetId] = reservedAt.Unix()
+         .          .    251:		cReservedUserID[eventId][sheetId] = userId
+         .          .    252:	}
+         .          .    253:
+         .          .    254:	log.Println("InitReservedTime", time.Since(t).Seconds())
+         .          .    255:}
+ROUTINE ======================== main.InitUser in /home/isucon/torb/webapp/go/src/torb/app.go
+         0   512.03kB (flat, cum)  0.27% of Total
+         .          .    177:	rows, err := db.Queryx("SELECT * FROM `users`")
+         .          .    178:	must(err)
+         .          .    179:	defer rows.Close()
+         .          .    180:	for rows.Next() {
+         .          .    181:		var user User
+         .   512.03kB    182:		err = rows.StructScan(&user)
+         .          .    183:		must(err)
+         .          .    184:
+         .          .    185:		cUser[user.ID] = &user
+         .          .    186:		cUserNameToID[user.LoginName] = user.ID
+         .          .    187:	}
+ROUTINE ======================== main.StartProfile in /home/isucon/torb/webapp/go/src/torb/prof.go
+         0     1.16MB (flat, cum)  0.62% of Total
+         .          .     64:func StartProfile(duration time.Duration) error {
+         .          .     65:	f, err := os.Create(cpuProfileFile)
+         .          .     66:	if err != nil {
+         .          .     67:		return err
+         .          .     68:	}
+         .     1.16MB     69:	if err := pprof.StartCPUProfile(f); err != nil {
+         .          .     70:		return err
+         .          .     71:	}
+         .          .     72:	runtime.SetBlockProfileRate(1)
+         .          .     73:	isProfiling = true
+         .          .     74:	if 0 < duration.Seconds() {
+ROUTINE ======================== main.adminLoginRequired.func1 in /home/isucon/torb/webapp/go/src/torb/app.go
+         0   144.04MB (flat, cum) 77.64% of Total
+         .          .    410:func adminLoginRequired(next echo.HandlerFunc) echo.HandlerFunc {
+         .          .    411:	return func(c echo.Context) error {
+         .          .    412:		if _, err := getLoginAdministrator(c); err != nil {
+         .          .    413:			return resError(c, "admin_login_required", 401)
+         .          .    414:		}
+         .   144.04MB    415:		return next(c)
+         .          .    416:	}
+         .          .    417:}
+         .          .    418:
+         .          .    419:func getLoginUser(c echo.Context) (*User, error) {
+         .          .    420:	userID := sessUserID(c)
+ROUTINE ======================== main.getLoginUser in /home/isucon/torb/webapp/go/src/torb/app.go
+         0   512.02kB (flat, cum)  0.27% of Total
+         .          .    415:		return next(c)
+         .          .    416:	}
+         .          .    417:}
+         .          .    418:
+         .          .    419:func getLoginUser(c echo.Context) (*User, error) {
+         .   512.02kB    420:	userID := sessUserID(c)
+         .          .    421:	if userID == 0 {
+         .          .    422:		return nil, errors.New("not logged in")
+         .          .    423:	}
+         .          .    424:	//var user User
+         .          .    425:	//err := db.QueryRow("SELECT id, nickname FROM users WHERE id = ?", userID).Scan(&user.ID, &user.Nickname)
+ROUTINE ======================== main.init in <autogenerated>
+         0   517.33kB (flat, cum)  0.27% of Total
+ Error: Could not find file <autogenerated> on path /home/isucon
+ROUTINE ======================== main.loginRequired.func1 in /home/isucon/torb/webapp/go/src/torb/app.go
+         0        1MB (flat, cum)  0.54% of Total
+         .          .    398:	sess.Save(c.Request(), c.Response())
+         .          .    399:}
+         .          .    400:
+         .          .    401:func loginRequired(next echo.HandlerFunc) echo.HandlerFunc {
+         .          .    402:	return func(c echo.Context) error {
+         .   512.02kB    403:		if _, err := getLoginUser(c); err != nil {
+         .          .    404:			return resError(c, "login_required", 401)
+         .          .    405:		}
+         .   512.02kB    406:		return next(c)
+         .          .    407:	}
+         .          .    408:}
+         .          .    409:
+         .          .    410:func adminLoginRequired(next echo.HandlerFunc) echo.HandlerFunc {
+         .          .    411:	return func(c echo.Context) error {
+ROUTINE ======================== main.main.func10 in /home/isucon/torb/webapp/go/src/torb/app.go
+         0   512.02kB (flat, cum)  0.27% of Total
+         .          .   1054:				log.Println("re-try: rollback by", err)
+         .          .   1055:				continue
+         .          .   1056:			}
+         .          .   1057:
+         .          .   1058:			var reserv Reservation
+         .   512.02kB   1059:			err = tx.Get(&reserv, "SELECT * FROM `reservations` WHERE id = ?", reservationID)
+         .          .   1060:			if err != nil {
+         .          .   1061:				tx.Rollback()
+         .          .   1062:				log.Println("re-try: rollback by", err)
+         .          .   1063:				continue
+         .          .   1064:			}
+ROUTINE ======================== main.main.func20 in /home/isucon/torb/webapp/go/src/torb/app.go
+   42.38MB   144.04MB (flat, cum) 77.64% of Total
+         .          .   1357:				ReservationID: reservation.ID,
+         .          .   1358:				EventID:       event.ID,
+         .          .   1359:				Rank:          sheet.Rank,
+         .          .   1360:				Num:           sheet.Num,
+         .          .   1361:				UserID:        reservation.UserID,
+         .        8MB   1362:				SoldAt:        reservation.ReservedAt.Format("2006-01-02T15:04:05.000000Z"),
+         .          .   1363:				Price:         event.Price + sheet.Price,
+         .          .   1364:				ReservedAt:    reservation.ReservedAt.Unix(),
+         .          .   1365:			}
+         .          .   1366:			if reservation.CanceledAt != nil {
+         .       14MB   1367:				report.CanceledAt = reservation.CanceledAt.Format("2006-01-02T15:04:05.000000Z")
+         .          .   1368:			}
+   42.38MB    42.38MB   1369:			reports = append(reports, report)
+         .          .   1370:		}
+         .    79.66MB   1371:		return renderReportCSV(c, reports)
+         .          .   1372:	}, adminLoginRequired)
+         .          .   1373:
+         .          .   1374:	e.Start(":" + appPort)
+         .          .   1375:}
+         .          .   1376:
+ROUTINE ======================== main.main.func3 in /home/isucon/torb/webapp/go/src/torb/app.go
+         0    38.98MB (flat, cum) 21.01% of Total
+         .          .    758:		err := cmd.Run()
+         .          .    759:		if err != nil {
+         .          .    760:			return nil
+         .          .    761:		}
+         .          .    762:
+         .    37.82MB    763:		InitCache()
+         .          .    764:
+         .          .    765:		noprofile := c.Param("noprofile")
+         .          .    766:		if noprofile == "" {
+         .     1.16MB    767:			StartProfile(time.Minute)
+         .          .    768:		}
+         .          .    769:		return c.NoContent(204)
+         .          .    770:	})
+         .          .    771:	e.POST("/api/users", func(c echo.Context) error {
+         .          .    772:		var params struct {
+ROUTINE ======================== main.renderReportCSV in /home/isucon/torb/webapp/go/src/torb/app.go
+   14.50MB    79.66MB (flat, cum) 42.94% of Total
+         .          .   1389:func renderReportCSV(c echo.Context, reports []Report) error {
+         .          .   1390:	sort.Slice(reports, func(i, j int) bool { return reports[i].ReservedAt < reports[j].ReservedAt })
+         .          .   1391:
+         .          .   1392:	body := bytes.NewBufferString("reservation_id,event_id,rank,num,price,user_id,sold_at,canceled_at\n")
+         .          .   1393:	for _, v := range reports {
+         .    65.16MB   1394:		body.WriteString(fmt.Sprintf("%d,%d,%s,%d,%d,%d,%s,%s\n",
+   14.50MB    14.50MB   1395:			v.ReservationID, v.EventID, v.Rank, v.Num, v.Price, v.UserID, v.SoldAt, v.CanceledAt))
+         .          .   1396:	}
+         .          .   1397:
+         .          .   1398:	c.Response().Header().Set("Content-Type", `text/csv; charset=UTF-8`)
+         .          .   1399:	c.Response().Header().Set("Content-Disposition", `attachment; filename="report.csv"`)
+         .          .   1400:	_, err := io.Copy(c.Response(), body)
+ROUTINE ======================== main.sessUserID in /home/isucon/torb/webapp/go/src/torb/app.go
+         0   512.02kB (flat, cum)  0.27% of Total
+         .          .    335:	LoginName string `json:"login_name,omitempty"`
+         .          .    336:	PassHash  string `json:"pass_hash,omitempty"`
+         .          .    337:}
+         .          .    338:
+         .          .    339:func sessUserID(c echo.Context) int64 {
+         .   512.02kB    340:	sess, _ := session.Get("session", c)
+         .          .    341:	var userID int64
+         .          .    342:	if x, ok := sess.Values["user_id"]; ok {
+         .          .    343:		userID, _ = x.(int64)
+         .          .    344:	}
+         .          .    345:	return userID

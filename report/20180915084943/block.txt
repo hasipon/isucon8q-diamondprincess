@@ -1,0 +1,22 @@
+File: torb
+Type: delay
+Time: Sep 15, 2018 at 8:49am (UTC)
+Showing nodes accounting for 1281.30s, 100% of 1281.73s total
+Dropped 59 nodes (cum <= 6.41s)
+      flat  flat%   sum%        cum   cum%
+   799.82s 62.40% 62.40%    799.82s 62.40%  sync.(*Mutex).Lock
+   416.60s 32.50% 94.90%    416.60s 32.50%  runtime.selectgo
+    64.88s  5.06%   100%     64.88s  5.06%  runtime.chanrecv1
+         0     0%   100%     50.93s  3.97%  database/sql.(*DB).connectionResetter
+         0     0%   100%     21.55s  1.68%  database/sql.(*Rows).awaitDone
+         0     0%   100%     64.64s  5.04%  database/sql.(*Tx).awaitDone
+         0     0%   100%    344.12s 26.85%  github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1
+         0     0%   100%    799.82s 62.40%  github.com/labstack/echo-contrib/session.MiddlewareWithConfig.func1.1
+         0     0%   100%    799.82s 62.40%  github.com/labstack/echo.(*Echo).Add.func1
+         0     0%   100%    799.82s 62.40%  github.com/labstack/echo.(*Echo).ServeHTTP
+         0     0%   100%    799.82s 62.40%  github.com/labstack/echo/middleware.LoggerWithConfig.func2.1
+         0     0%   100%    797.12s 62.19%  main.loginRequired.func1
+         0     0%   100%    642.70s 50.14%  main.main.func10
+         0     0%   100%    154.21s 12.03%  main.main.func11
+         0     0%   100%    800.25s 62.43%  net/http.(*conn).serve
+         0     0%   100%    799.82s 62.40%  net/http.serverHandler.ServeHTTP

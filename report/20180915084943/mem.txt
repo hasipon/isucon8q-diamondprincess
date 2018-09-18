@@ -1,0 +1,34 @@
+File: torb
+Type: inuse_space
+Time: Sep 15, 2018 at 8:49am (UTC)
+Showing nodes accounting for 184.52MB, 99.46% of 185.53MB total
+Dropped 15 nodes (cum <= 0.93MB)
+      flat  flat%   sum%        cum   cum%
+   47.16MB 25.42% 25.42%    47.16MB 25.42%  bytes.makeSlice
+   42.38MB 22.84% 48.26%   144.04MB 77.64%  main.main.func20
+   23.28MB 12.55% 60.81%    36.28MB 19.56%  main.InitReservation
+      22MB 11.86% 72.67%       22MB 11.86%  time.Time.Format
+      18MB  9.70% 82.37%       18MB  9.70%  fmt.Sprintf
+   14.50MB  7.82% 90.19%    79.66MB 42.94%  main.renderReportCSV
+   13.50MB  7.28% 97.46%    13.50MB  7.28%  reflect.New
+    1.16MB  0.62% 98.09%     1.16MB  0.62%  runtime/pprof.StartCPUProfile
+    1.04MB  0.56% 98.65%     1.04MB  0.56%  main.InitReservedTime
+    1.01MB  0.54% 99.19%     1.01MB  0.54%  runtime/pprof.(*profMap).lookup
+    0.50MB  0.27% 99.46%       14MB  7.55%  database/sql.convertAssign
+         0     0% 99.46%    47.16MB 25.42%  bytes.(*Buffer).WriteString
+         0     0% 99.46%    47.16MB 25.42%  bytes.(*Buffer).grow
+         0     0% 99.46%       14MB  7.55%  database/sql.(*Rows).Scan
+         0     0% 99.46%    13.50MB  7.28%  github.com/jmoiron/sqlx.(*Rows).StructScan
+         0     0% 99.46%   184.02MB 99.18%  github.com/labstack/echo-contrib/session.MiddlewareWithConfig.func1.1
+         0     0% 99.46%   184.02MB 99.18%  github.com/labstack/echo.(*Echo).Add.func1
+         0     0% 99.46%   184.02MB 99.18%  github.com/labstack/echo.(*Echo).ServeHTTP
+         0     0% 99.46%   184.02MB 99.18%  github.com/labstack/echo/middleware.LoggerWithConfig.func2.1
+         0     0% 99.46%    37.82MB 20.39%  main.InitCache
+         0     0% 99.46%     1.16MB  0.62%  main.StartProfile
+         0     0% 99.46%   144.04MB 77.64%  main.adminLoginRequired.func1
+         0     0% 99.46%        1MB  0.54%  main.loginRequired.func1
+         0     0% 99.46%    38.98MB 21.01%  main.main.func3
+         0     0% 99.46%   184.02MB 99.18%  net/http.(*conn).serve
+         0     0% 99.46%   184.02MB 99.18%  net/http.serverHandler.ServeHTTP
+         0     0% 99.46%     1.01MB  0.54%  runtime/pprof.(*profileBuilder).addCPUData
+         0     0% 99.46%     1.01MB  0.54%  runtime/pprof.profileWriter
