@@ -1,12 +1,10 @@
 all: build
+GO := GOPATH=`pwd` go
 
-.PHONY: clean
-clean:
-	rm -rf torb
-
-deps:
-	gb vendor restore
+.PHONY: init
+init: 
+	$(GO) get -d ./...
 
 .PHONY: build
-build:
-	GOPATH=`pwd`:`pwd`/vendor go build -v torb
+build: 
+	$(GO) install torb

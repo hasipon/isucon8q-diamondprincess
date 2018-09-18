@@ -1,0 +1,15 @@
+#!/bin/bash
+set -x
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:$PATH
+
+rm -rf /tmp/bench
+mkdir -p /tmp/bench
+cd /tmp/bench
+date "+%Y%m%d_%H%M%S" > start_date
+sudo mv /var/log/nginx/access.log /var/log/nginx/access.log.bak
+sudo kill -USR1 $(cat /var/run/nginx.pid)
+(timeout 60 dstat -tam --output=dstat.csv 1>/dev/null 2>/dev/null &)
+(timeout 60 pidstat -C 'nginx|mysql|torb' -hur -p ALL 1 > pidstat.log &)
+(timeout 60 netstat -a -p --tcp -c > netstat.log &)
+(timeout 60 myprofiler -user isucon -password isucon > myprofiler.log &)
+

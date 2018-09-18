@@ -1,0 +1,20 @@
+[Unit]
+Description = isucon8 qualifier webapp in Group
+After=mysqld.service
+
+[Service]
+WorkingDirectory=/home/isucon/torb/webapp/go
+EnvironmentFile=/home/isucon/torb/webapp/env.sh
+
+ExecStart = /home/isucon/torb/webapp/go/torb
+
+Restart   = always
+Type      = simple
+User      = isucon
+Group     = isucon
+
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy = multi-user.target
